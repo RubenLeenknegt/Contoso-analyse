@@ -1,0 +1,13 @@
+# Data
+/data/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+
+# IDE
+.idea/
+
+# Secrets
+.env

@@ -1,0 +1,31 @@
+[project]
+name = "contoso-charts"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Ruben Leenknegt", email = "r.leenknegt@pm.me" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pandas>=3.0.6",
+    "plotly>=7.1.0",
+]
+
+[project.scripts]
+contoso-charts = "contoso_charts:main"
+
+[build-system]
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.17.0",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

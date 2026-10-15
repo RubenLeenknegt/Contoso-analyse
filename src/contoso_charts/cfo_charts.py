@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 
 from contoso_charts.data import Model
 
+
 def card_total_sales(model: Model) -> go.Figure:
     """Card: Total Sales = SUM(Fact_Sales[SalesAmount])"""
     total = model.sales["SalesAmount"].sum()
@@ -18,6 +19,7 @@ def card_total_sales(model: Model) -> go.Figure:
     )
     fig.update_layout(height=200)
     return fig
+
 
 def card_total_cost(model: Model) -> go.Figure:
     """Card: Total Cost = SUM(Fact_Sales[TotalCost])"""
@@ -70,6 +72,7 @@ def card_margin(model: Model) -> go.Figure:
     fig.update_layout(height=200)
     return fig
 
+
 def revenue_year_over_year(model: Model) -> Figure:
     """US-02: revenue per quarter, with margin % in the tooltip."""
     # 1. Take only the columns this chart needs
@@ -103,6 +106,7 @@ def revenue_year_over_year(model: Model) -> Figure:
     )
     fig.update_layout(height=650)
     return fig
+
 
 def sales_margin_per_country(model: Model) -> go.Figure:
     """US-05: store sales (x) against margin % (y) per country, excluding the USA."""
@@ -147,6 +151,7 @@ def sales_margin_per_country(model: Model) -> go.Figure:
     fig.update_layout(height=650, xaxis_tickprefix="$", yaxis_tickformat=".0%")
     return fig
 
+
 FIRST_YEAR = 2011
 LAST_YEAR = 2013
 
@@ -171,8 +176,12 @@ def exchange_rate_vs_sales(model: Model) -> go.Figure:
     filtered = filtered.assign(Year=filtered["DateKey"].dt.year)
 
     # 4. Sales change per currency: last year compared with first year
-    sales_first = filtered[filtered["Year"] == FIRST_YEAR].groupby("CurrencyCode")["SalesAmount"].sum()
-    sales_last = filtered[filtered["Year"] == LAST_YEAR].groupby("CurrencyCode")["SalesAmount"].sum()
+    sales_first = (
+        filtered[filtered["Year"] == FIRST_YEAR].groupby("CurrencyCode")["SalesAmount"].sum()
+    )
+    sales_last = (
+        filtered[filtered["Year"] == LAST_YEAR].groupby("CurrencyCode")["SalesAmount"].sum()
+    )
     sales_change = ((sales_last - sales_first) / sales_first).reset_index(name="SalesChange")
 
     # 5. Exchange-rate change per currency: average of last year compared with first year
